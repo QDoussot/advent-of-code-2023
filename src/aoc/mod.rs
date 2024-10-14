@@ -1,6 +1,4 @@
 use derive_more::Display;
-use std::io;
-use std::io::{BufRead, BufReader};
 use structopt::StructOpt;
 pub mod problem;
 
@@ -22,7 +20,7 @@ impl From<problem::ProblemError> for Error {
 }
 
 pub trait Aoc {
-    fn solve(&self, lines: Vec<String>, day: usize, part: usize) -> Result<String, Error>;
+    fn solve(&self, puzzle_input:String, day: usize, part: usize) -> Result<String, Error>;
 }
 
 pub trait AocEx: Aoc {
@@ -47,15 +45,10 @@ where
             Some(file_name) => file_name,
         };
 
-        let file = std::fs::File::open(&file_name)
+        let content = std::fs::read_to_string(&file_name)
             .map_err(|e| Error::CantOpenInputFile(file_name, e.to_string()))?;
 
-        let lines = BufReader::new(file)
-            .lines()
-            .collect::<Result<Vec<_>, io::Error>>()
-            .unwrap();
-
-        let solution = self.solve(lines, opt.day, opt.part)?;
+        let solution = self.solve(content, opt.day, opt.part)?;
 
         Ok(solution)
     }
