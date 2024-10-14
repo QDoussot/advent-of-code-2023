@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 derive_more = { version = "1.0.0", features = ["display"] }
 structopt = "0.3.26"
+huparse = { path = "/home/quentin/projects/huparse" }
+itertools = "0.13.0"
