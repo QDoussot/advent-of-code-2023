@@ -11,11 +11,14 @@ pub enum Error {
     #[display("No solver implemented for day {}, part: {}", _0, _1)]
     NoCorrespondingSolver(usize,usize),
     #[allow(dead_code)]
-    #[display("Parsing failed: \"{}\"", _0)]
-    ParsingFailed(problem::ProblemError),
-    #[allow(dead_code)]
-    #[display("Solver failed: \"{}\"", _0)]
-    SolverFailed(problem::ProblemError),
+    #[display("Solver/Parser failed: \"{}\"", _0)]
+    CouldNotSolveProblem(problem::ProblemError),
+}
+
+impl From<problem::ProblemError> for Error {
+    fn from(value: problem::ProblemError) -> Self {
+        Self::CouldNotSolveProblem(value)
+    }
 }
 
 pub trait Aoc {
