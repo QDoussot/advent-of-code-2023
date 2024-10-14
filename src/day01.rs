@@ -1,5 +1,7 @@
 use crate::aoc::problem::{Problem, ProblemError};
 use derive_more::Display;
+use huparse::parse::Parse;
+use huparse::parser;
 use itertools::Itertools;
 
 #[derive(Debug, Display)]
@@ -94,15 +96,19 @@ impl Trebuchet {
                         ))
                     })
             })
-            .fold_ok(0, |sum, (tenth, unit)| {
-                sum + tenth * 10 + unit
-            })
+            .fold_ok(0, |sum, (tenth, unit)| sum + tenth * 10 + unit)
     }
 }
 
 impl Problem for Trebuchet {
-    fn parse(lines: Vec<String>) -> Result<Self, crate::aoc::problem::ProblemError> {
-        let calibration = lines.into_iter().map(Calibration).collect();
+    fn parse(lines: String) -> Result<Self, crate::aoc::problem::ProblemError> {
+        let parser = parser!([String | "\n"!]);
+        let calibration = parser
+            .parse_top(&lines)
+            .map_err(|e| ProblemError::ParsingFailed(e.to_string()))?
+            .into_iter()
+            .map(Calibration)
+            .collect();
         Ok(Trebuchet { calibration })
     }
 
