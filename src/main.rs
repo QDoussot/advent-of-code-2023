@@ -1,5 +1,6 @@
 mod aoc;
 mod day02;
+mod day03;
 use crate::aoc::problem::solve;
 use crate::aoc::AocEx;
 use aoc::{Aoc, Error};
@@ -13,6 +14,7 @@ impl Aoc for TwentyThree {
         match day {
             1 => Ok(solve::<day01::Trebuchet>(puzzle_input, part)?),
             2 => Ok(solve::<day02::CubeGameSession>(puzzle_input, part)?),
+            3 => Ok(solve::<day03::EngineSchematic>(puzzle_input, part)?),
         _ => Err(Error::NoCorrespondingSolver(day,part))
         }
     }

@@ -1,7 +1,7 @@
 use crate::aoc::problem::{Problem, ProblemError};
-use derive_more::FromStr;
 use huparse::parse::Parse;
 use huparse::parser;
+use derive_more::FromStr;
 use std::ops::{Index, IndexMut};
 
 #[derive(FromStr)]
